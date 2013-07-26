@@ -6,6 +6,7 @@ var connectLeg = module.exports = function connectLeg(log) {
     log.info("http request", {
       request: req._leg_requestId,
       method: req.method,
+      host: req.host,
       path: req.url,
     });
 
@@ -24,6 +25,7 @@ var connectLeg = module.exports = function connectLeg(log) {
       log[level]("response", {
         request: req._leg_requestId,
         method: req.method,
+        host: req.host,
         path: req.url,
         status: res.statusCode,
         took: Date.now() - req._leg_requestTime,
