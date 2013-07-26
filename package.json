@@ -1,0 +1,19 @@
+{
+  "name": "connect-leg",
+  "version": "0.0.0",
+  "description": "leg logging for connect applications",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/deoxxa/connect-leg.git"
+  },
+  "keywords": [
+    "leg",
+    "connect",
+    "express",
+    "logging",
+    "logger"
+  ],
+  "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
+  "license": "BSD"
+}
