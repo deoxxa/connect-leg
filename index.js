@@ -1,6 +1,6 @@
 var connectLeg = module.exports = function connectLeg(log) {
   return function connectLeg(req, res, next) {
-    req._leg_requestId = [Date.now(), crypto.randomBytes(4).toString("hex")].join("-");
+    req._leg_requestId = [Date.now(), [0,0,0,0,0,0,0,0].map(function(e) { return String.fromCharCode(Math.floor(Math.random() * 25) + 97); }).join("")].join("-");
     req._leg_requestTime = Date.now();
 
     log.info("http request", {
