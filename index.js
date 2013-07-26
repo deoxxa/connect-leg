@@ -8,6 +8,8 @@ var connectLeg = module.exports = function connectLeg(log) {
       method: req.method,
       host: req.host,
       path: req.url,
+      origin: req.headers.origin,
+      referer: req.headers.referer,
     });
 
     var _end = res.end;
