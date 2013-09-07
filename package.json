@@ -15,5 +15,8 @@
     "logger"
   ],
   "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "proquint-random-id": "0.0.1"
+  }
 }
