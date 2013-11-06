@@ -17,6 +17,7 @@
   "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
   "license": "BSD",
   "dependencies": {
-    "proquint-random-id": "0.0.1"
+    "proquint-random-id": "~0.0.1",
+    "deepmerge": "~0.2.7"
   }
 }

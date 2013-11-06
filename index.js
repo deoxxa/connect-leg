@@ -1,18 +1,35 @@
-var randomId = require("proquint-random-id");
+var deepmerge = require("deepmerge"),
+    randomId = require("proquint-random-id");
 
-var connectLeg = module.exports = function connectLeg(log) {
+var connectLeg = module.exports = function connectLeg(log, toMerge) {
+  if (typeof toMerge !== "object" && typeof toMerge !== "function") {
+    toMerge = {};
+  }
+
+  if (typeof toMerge === "object") {
+    var _toMerge = toMerge;
+
+    toMerge = function toMerge(req, res) {
+      return _toMerge;
+    };
+  }
+
   return function connectLeg(req, res, next) {
     req._leg_requestId = randomId();
     req._leg_requestTime = Date.now();
 
-    log.info("request", {
-      request: req._leg_requestId,
-      method: req.method,
-      host: req.host,
-      path: req.url,
-      origin: req.headers.origin,
-      referer: req.headers.referer,
-    });
+    log.info("request", deepmerge(toMerge(req, res), {
+      http: {
+        request: {
+          id: req._leg_requestId,
+          method: req.method,
+          host: req.host,
+          path: req.url,
+          origin: req.headers.origin,
+          referer: req.headers.referer,
+        },
+      },
+    }));
 
     var _end = res.end;
     res.end = function() {
@@ -26,14 +43,22 @@ var connectLeg = module.exports = function connectLeg(log) {
         level = "info";
       }
 
-      log[level]("response", {
-        request: req._leg_requestId,
-        method: req.method,
-        host: req.host,
-        path: req.url,
-        status: res.statusCode,
-        took: Date.now() - req._leg_requestTime,
-      });
+      log[level]("response", deepmerge(toMerge(req, res), {
+        http: {
+          request: {
+            id: req._leg_requestId,
+            method: req.method,
+            host: req.host,
+            path: req.url,
+          },
+          response: {
+            status: res.statusCode,
+          },
+        },
+        timing: {
+          duration: Date.now() - req._leg_requestTime,
+        },
+      }));
 
       return _end.apply(res, arguments);
     };
