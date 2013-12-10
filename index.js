@@ -1,4 +1,5 @@
 var deepmerge = require("deepmerge"),
+    parstack = require("parstack"),
     randomId = require("proquint-random-id");
 
 var connectLeg = module.exports = function connectLeg(log, toMerge) {
@@ -64,5 +65,40 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
     };
 
     return next();
+  };
+};
+
+connectLeg.logger = connectLeg;
+
+connectLeg.errorHandler = function errorHandler(log, toMerge) {
+  if (typeof toMerge !== "object" && typeof toMerge !== "function") {
+    toMerge = {};
+  }
+
+  if (typeof toMerge === "object") {
+    var _toMerge = toMerge;
+
+    toMerge = function toMerge(req, res) {
+      return _toMerge;
+    };
+  }
+
+  return function errorHandler(err, req, res, next) {
+    if (err.status || err.code || err.statusCode) {
+      res.status(err.status || err.code || err.statusCode);
+    } else {
+      res.status(500);
+    }
+
+    log.error("error", deepmerge(toMerge(req, res), {
+      http: {
+        request: {
+          id: req._leg_requestId,
+        },
+      },
+      error: parstack(err),
+    }));
+
+    return res.send(err.toString());
   };
 };

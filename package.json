@@ -18,6 +18,7 @@
   "license": "BSD",
   "dependencies": {
     "proquint-random-id": "~0.0.1",
-    "deepmerge": "~0.2.7"
+    "deepmerge": "~0.2.7",
+    "parstack": "0.0.1"
   }
 }
