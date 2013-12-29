@@ -84,8 +84,12 @@ connectLeg.errorHandler = function errorHandler(log, toMerge) {
   }
 
   return function errorHandler(err, req, res, next) {
-    if (err.status || err.code || err.statusCode) {
-      res.status(err.status || err.code || err.statusCode);
+    if (typeof err.status === "number") {
+      res.status(err.status);
+    } else if (typeof err.code === "number") {
+      res.status(err.code);
+    } else if (typeof err.statusCode === "number") {
+      res.status(err.statusCode);
     } else {
       res.status(500);
     }
