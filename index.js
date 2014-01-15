@@ -106,6 +106,8 @@ connectLeg.errorHandler = function errorHandler(log, toMerge) {
       error: parstack(err),
     }));
 
-    return res.send(err.toString());
+    if (!res.headersSent) {
+      return res.send(err.toString());
+    }
   };
 };
