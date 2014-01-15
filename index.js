@@ -32,8 +32,7 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
       },
     }));
 
-    var _end = res.end;
-    res.end = function() {
+    var onEnd = function onEnd() {
       var level;
 
       if (res.statusCode >= 400 && res.statusCode <= 499) {
@@ -61,8 +60,12 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
         },
       }));
 
-      return _end.apply(res, arguments);
+      res.removeListener("finish", onEnd);
+      res.removeListener("close", onEnd);
     };
+
+    res.on("finish", onEnd);
+    res.on("close", onEnd);
 
     return next();
   };
