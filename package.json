@@ -1,6 +1,6 @@
 {
   "name": "connect-leg",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "leg logging for connect applications",
   "main": "index.js",
   "repository": {
