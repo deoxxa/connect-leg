@@ -34,7 +34,7 @@ describe('connect-leg for Connect', function() {
 		}
 	});
 
-	it('Should be log a request', function(done) {
+	it('Should be able to log a request', function(done) {
 		request('http://localhost:3001', function (err, response, body) {
 			(err === null).should.be.ok;
 			response.should.exist;
