@@ -24,7 +24,7 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
         request: {
           id: req._leg_requestId,
           method: req.method,
-          host: req.host,
+          host: req.hostname || req.headers['host'],
           path: req.url,
           origin: req.headers.origin,
           referer: req.headers.referer,
@@ -48,7 +48,7 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
           request: {
             id: req._leg_requestId,
             method: req.method,
-            host: req.host,
+            host: req.hostname || req.headers['host'],
             path: req.url,
           },
           response: {

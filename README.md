@@ -24,6 +24,13 @@ Usage
 app.use(require("connect-leg")(log));
 ```
 
+Test
+----
+
+```shell
+npm test
+```
+
 License
 -------
 
