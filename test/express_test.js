@@ -41,7 +41,16 @@ describe('connect-leg for Express', function() {
 
 			try {
 				fs.statSync(LOG_FILE).isFile().should.be.ok;
-				fs.readFileSync(LOG_FILE).toString().indexOf('localhost').should.be.greaterThan(-1);
+
+				var logFileContent = fs.readFileSync(LOG_FILE).toString();
+
+				logFileContent.indexOf('"host":"localhost"').should.be.greaterThan(-1);
+				logFileContent.indexOf('"INFO","request"').should.be.greaterThan(-1);
+				logFileContent.indexOf('"method":"GET"').should.be.greaterThan(-1);
+				logFileContent.indexOf('"path":"/"').should.be.greaterThan(-1);
+				logFileContent.indexOf('"INFO","response"').should.be.greaterThan(-1);
+				logFileContent.indexOf('"response":{"status":200}}').should.be.greaterThan(-1);
+
 				done();
 			}
 			catch(e) {
