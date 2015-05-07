@@ -24,10 +24,10 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
         request: {
           id: req._leg_requestId,
           method: req.method,
-          host: req.hostname || req.headers['host'],
+          host: req.hostname || (req.headers['host'].indexOf(':') > -1) ? req.headers['host'].substring(0, req.headers['host'].indexOf(':')) : req.headers['host'],
           path: req.url,
           origin: req.headers.origin,
-          referer: req.headers.referer,
+          referer: req.headers.referer
         },
       },
     }));
@@ -48,8 +48,8 @@ var connectLeg = module.exports = function connectLeg(log, toMerge) {
           request: {
             id: req._leg_requestId,
             method: req.method,
-            host: req.hostname || req.headers['host'],
-            path: req.url,
+            host: req.hostname || (req.headers['host'].indexOf(':') > -1) ? req.headers['host'].substring(0, req.headers['host'].indexOf(':')) : req.headers['host'],
+            path: req.url
           },
           response: {
             status: res.statusCode,
